@@ -77,7 +77,7 @@ median_fe_caps = begin
 			sheetname = tag
 			sheet = xf[sheetname]
 			df = DataFrame(XLSX.gettable(sheet))
-			push!(caps, median(df[!, :fe_count]))
+			push!(caps, Int(ceil(median(df[!, :fe_count]))))
 		end
 	end
 
@@ -85,14 +85,13 @@ median_fe_caps = begin
 end
 
 # Benchmark peer algorithms with baselines
-peer_algorithms = [
-# ("qpso", qpso),
-# ("θqpso", θqpso),
-# ("wqpso", wqpso),
-	("gaqpso", gaqpso)
-]
-
 begin
+	peer_algorithms = [
+		("qpso", qpso),
+		("θqpso", θqpso),
+		("wqpso", wqpso),
+		("gaqpso", gaqpso)
+	]
 	runs = 100
 	tolerance = 10e-8
 
@@ -142,10 +141,10 @@ end
 # Experiment 2: Compare the performance of slslqpso and gaqpso on the CEC 2020 benchmark
 begin
 	algorithms = [
-		("qpso", qpso),
-		("θqpso", θqpso),
-		("wqpso", wqpso),
-		("gaqpso", gaqpso),
+		# ("qpso", qpso),
+		# ("θqpso", θqpso),
+		# ("wqpso", wqpso),
+		# ("gaqpso", gaqpso),
 		("slslqpso", slslqpso),
 	]
 
