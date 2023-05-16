@@ -1,6 +1,6 @@
 using Statistics
 using Distributions
-export qpso, wqpso, gaqpso, θqpso, slslqpso
+export qpso, wqpso, gaqpso, θqpso, slslqpso, chaotic_bound
 
 # bound the value of x to [lb, ub] by logistic map random numbers
 function chaotic_bound(x, lb, ub)
@@ -453,6 +453,9 @@ function slslqpso(f, lb, ub, d; num_particles = 25, tolerance = 10e-8, fe_cap = 
 	# Initialize the global best fitness
 	gbest_fitness = Inf64
 
+	# gbest_fitness record
+	gbest_fitness_record = Float64[]
+
 	# Record the number of function evaluations, and the number of iterations
 	fe_count = 0
 	iter_count = 0
@@ -480,7 +483,7 @@ function slslqpso(f, lb, ub, d; num_particles = 25, tolerance = 10e-8, fe_cap = 
                 iter_count = iter_count + 1
 
                 if iter_count > max_iters
-                    return gbest, gbest_fitness, fe_count, iter_count - 1
+                    return gbest_fitness_record, gbest_fitness, fe_count, iter_count - 1
                 end
 
 				# Calculate fitness for each particle and update pbests and gbest
@@ -499,12 +502,14 @@ function slslqpso(f, lb, ub, d; num_particles = 25, tolerance = 10e-8, fe_cap = 
 						end
 					end
 
+					push!(gbest_fitness_record, gbest_fitness)
+
 					# Update the number of function evaluations
 					fe_count += 1
 
 					# If the number of function evaluations exceeds the cap, or the tolerance is reached, return the result
 					if fe_count >= fe_cap || gbest_fitness <= tolerance
-						return gbest, gbest_fitness, fe_count, iter_count
+						return gbest_fitness_record, gbest_fitness, fe_count, iter_count
 					end
 				end
 
@@ -533,7 +538,7 @@ function slslqpso(f, lb, ub, d; num_particles = 25, tolerance = 10e-8, fe_cap = 
 
                 # If the number of function evaluations exceeds the cap, or the tolerance is reached, return the result
                 if fe_count >= fe_cap || gbest_fitness <= tolerance
-                    return gbest, gbest_fitness, fe_count, iter_count
+                    return gbest_fitness_record, gbest_fitness, fe_count, iter_count
                 end
 
 
@@ -545,6 +550,7 @@ function slslqpso(f, lb, ub, d; num_particles = 25, tolerance = 10e-8, fe_cap = 
 
 				# Update the position of each particle
 				for pidx in 1:num_particles
+
 					for didx in 1:d
 						# Calculate the local attractor
 						ψ = rand()
@@ -596,8 +602,8 @@ function slslqpso(f, lb, ub, d; num_particles = 25, tolerance = 10e-8, fe_cap = 
 		end
 		living_interval[2] = index + 1
 
-        # println("iter_count: ", iter_count, " gbest_fitness: ", gbest_fitness, " living_intervals: ", living_interval)
+        println("iter_count: ", iter_count, " gbest_fitness: ", gbest_fitness, " living_intervals: ", living_interval)
 
 	end
-    return gbest, gbest_fitness, fe_count, iter_count
+    return gbest_fitness_record, gbest_fitness, fe_count, iter_count
 end
