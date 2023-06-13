@@ -6,10 +6,7 @@ This is the repository for SLSL-QPSO.
 
 ![fitness-graph](images/fitness-graph.png)
 
-An example showcase the escaping ability of SLSL-QPSO:
-https://github.com/kurodamaria/SLSLQPSO.jl/assets/75555231/5535c9fd-a230-445e-8b5a-87816c134948
-
-An example showcase how SLSL-QPSO seach strategy different from QPSO:
+An example showcase how SLSL-QPSO's seach strategy different from QPSO:
 https://github.com/kurodamaria/SLSLQPSO.jl/assets/75555231/c7c9e5dc-8362-426f-8dbb-8fdb5afeae76
 
 ## Installation
