@@ -4,6 +4,7 @@ authors = ["kurodamaria <xfreunion@gmail.com> and contributors"]
 version = "1.0.0-DEV"
 
 [deps]
+CodeTracking = "da1fd8a2-8d9e-5ec2-8556-3022fb5608a2"
 DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
 Distributed = "8ba89e20-285c-5b6f-9357-94700520ee1b"
 Distributions = "31c24e10-a181-5473-b8eb-7969acd0382f"
